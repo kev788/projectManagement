@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+  <meta charset="UTF-8" />
+  <title>Kanban</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+     font-family: "Montserrat", sans-serif;
+      background: black
+    }
+
+    .board {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding: 30px;
+      justify-content: flex-start;
+      padding-bottom: 300px;
+    }
+
+    .column {
+      background: #f4f5f7;
+      border-radius: 10px;
+      padding: 12px;
+      width: 260px;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      min-height: 50px;
+    }
+
+    .column h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .list-title {
+      flex-grow: 1;
+      user-select: none;
+    }
+
+    .delete-list-btn {
+      background: transparent;
+      border: none;
+      font-size: 18px;
+      color: #888;
+      cursor: pointer;
+      padding: 0 6px;
+      line-height: 1;
+      transition: color 0.2s ease;
+    }
+
+    .delete-list-btn:hover {
+      color: #f44336;
+    }
+
+    .card-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 20px;
+      flex-grow: 1;
+    }
+
+    .card {
+      background: white;
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-size: 14px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      cursor: grab;
+    }
+
+    .card:hover {
+      background: #f0f0f0;
+    }
+
+    .add-card input {
+      width: 100%;
+      padding: 8px 10px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .add-card input:focus {
+      border-color: #0079bf;
+      box-shadow: 0 0 0 2px rgba(0, 121, 191, 0.3);
+    }
+
+    .add-list {
+      width: 260px;
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      padding: 12px;
+      color: white;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      height: fit-content;
+    }
+
+    .add-list:hover {
+      background-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .add-list input {
+      width: 100%;
+      padding: 8px;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .column,
+      .add-list {
+        width: 100%;
+      }
+    }
+    h1{
+        color: black;
+        padding-left: 2%;
+    }
+    h2{
+        color: white;
+        padding-left: 3%;
+        font-weight: 200;
+    }
+    h1{
+        font-size: 50px;
+    }
+    ol{
+        font-size: 20px;
+        color: black;
+    }
+    .cc{
+        padding-left: 2%;
+        font-weight: 200;
+
+    }
+    .leftone{
+        width: 60%;
+        padding-left: 5%;
+    }
+        .rightone{
+        width: 40%;
+    }
+    .containerone{
+        display: flex;
+    }
+
+    .title{
+      color: white;
+      text-align: center;
+      font-size: 100px;
+      font-weight: 800;
+      margin-top: 100px;
+    }
+    .imgone{
+      width: 90%;
+      padding-right: 2%;
+      padding-left: 10%;
+      padding-top: 3%;
+      height: 250px;
+      object-fit: cover;
+    }
+    .imgtwo{
+      padding-top: 5%;
+      padding-bottom: 5%;
+      padding-left: 5%;
+      width: 95%;
+      height: 350px;
+      object-fit: cover;
+    }
+    .center{
+      padding-left: 5%;
+      background-color: white;
+      padding-bottom: 100px;
+      color: black;
+      padding-top: 5%;
+    }
+    h5{
+      color: white;
+      margin-left: 2%;
+      font-size: 25px;
+      margin-bottom: 0px;
+    }
+    header {
+      margin: auto;
+      display: flex;
+      border-radius: 10px;
+      border: 1px solid white;
+      background-color: white;
+      width: 300px;
+      margin-top: 20px;
+      justify-content: center;
+      gap: 20px;
+    }
+    a{
+      text-decoration: none;
+      color: black;
+      padding-top: 5px;
+
+      padding-bottom: 5px;
+    }
+    a:hover{
+      font-size: 17px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="kanban.html">Kanban</a>
+    <a href="criticalpath.html">Critical Path</a>
+  </header>
+      <p class="title">Kanban</p>
+    <div class="containerone">
+    <div class="leftone">
+    <h2>kanban = papan tanda </h2>
+
+
+   <h2> Tim kanban merepresentasikan setiap item pekerjaan sebagai
+    kartu kartu yang terpisah dalam papan. </h2>
+
+
+    <h2>Tujuan utama kanban adalah untuk merepresentasikan dan
+    memisah pekerjaan dimana anggota tim dapat dengan mudah
+    melacak pekerjaan menggunakan alur pekerjaan secara
+    visual </h2>
+    </div>
+    <div class="rightone">
+       <img src="kanban.gif" class="imgone">
+    </div>
+    </div>
+    <img src="kanban.png" class="imgtwo">
+<div class="center">
+<h1>Karakteristik</h1>
+<div class="cc">
+<ol type="1">
+  <li>Alur Kerja dengan Visual</li>
+  <li>Pembatasan Jumlah Pekerjaan (WIP)</li>
+  <li>Manajemen Aliran </li>
+  <li>Fleksibilitas dalam Perubahan Prioritas</li>
+  <li>Transparansi dan Kolaborasi</li>
+  <li>Responsif terhadap Permintaan/Pekerjaan tidak tetap</li>
+    <li>Mudah Diadopsi</li>
+</ol>
+</div>
+</div>
+<h2>
+<h5>Contoh</h5>
+  <div class="board" id="board">
+    <!-- Lists will be rendered here -->
+    <div class="add-list" id="addListBtn" onclick="showListInput()">
+      <div id="addListText">+ Add another list</div>
+      <div id="listInputWrapper" style="display:none;">
+        <input
+          type="text"
+          id="newListName"
+          placeholder="List title..."
+          onkeydown="addList(event)"
+        />
+      </div>
+    </div>
+  </div>
+  <script>
+    // Utilities for localStorage keys
+    const STORAGE_KEY = "kanbanBoardData";
+
+    // Load board data or return default if none exists
+    function loadBoardData() {
+  const data = localStorage.getItem(STORAGE_KEY);
+  if (data) return JSON.parse(data);
+  else
+    return [
+      {
+        id: "list-1",
+        title: "To Do",
+        cards: [
+          { id: generateId("card"), content: "Database" },
+          { id: generateId("card"), content: "Security" },
+        ],
+      },
+      {
+        id: "list-2",
+        title: "Doing",
+        cards: [
+          { id: generateId("card"), content: "Web Design" },
+          { id: generateId("card"), content: "Content" },
+        ],
+      },
+      {
+        id: "list-3",
+        title: "Finished",
+        cards: [
+          { id: generateId("card"), content: "Framework" },
+          { id: generateId("card"), content: "Structure" },
+          { id: generateId("card"), content: "Idea" },
+        ],
+      },
+    ];
+}
+
+
+    // Save board data to localStorage
+    function saveBoardData() {
+      const lists = [];
+      document.querySelectorAll(".column").forEach((col) => {
+        const listId = col.dataset.id;
+        const title = col.querySelector(".list-title").textContent;
+        const cards = [];
+        col.querySelectorAll(".card").forEach((card) => {
+          cards.push({
+            id: card.id,
+            content: card.textContent,
+          });
+        });
+        lists.push({ id: listId, title, cards });
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(lists));
+    }
+
+    // Generate unique ID for cards and lists
+    function generateId(prefix) {
+      return prefix + "-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
+    }
+
+    // Render the whole board from data
+    function renderBoard() {
+      const board = document.getElementById("board");
+      const addListBtn = document.getElementById("addListBtn");
+
+      // Remove all columns except add-list div
+      document.querySelectorAll(".column").forEach((col) => col.remove());
+
+      const data = loadBoardData();
+
+      data.forEach((list) => {
+        const column = document.createElement("div");
+        column.className = "column";
+        column.dataset.id = list.id;
+        column.setAttribute("ondrop", "drop(event)");
+        column.setAttribute("ondragover", "allowDrop(event)");
+
+        column.innerHTML = `
+          <h3>
+            <span class="list-title">${list.title}</span>
+            <button class="delete-list-btn" title="Delete list" onclick="deleteList('${list.id}')">&times;</button>
+          </h3>
+          <div class="card-list"></div>
+          <div class="add-card">
+            <input type="text" placeholder="+ Add a card" />
+          </div>
+        `;
+
+        // Insert before the add-list button
+        board.insertBefore(column, addListBtn);
+
+        const cardListDiv = column.querySelector(".card-list");
+        list.cards.forEach((cardData) => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.id = cardData.id;
+          card.textContent = cardData.content;
+          card.draggable = true;
+          card.addEventListener("dragstart", drag);
+          cardListDiv.appendChild(card);
+        });
+
+        // Add event listener to input for adding cards
+        const input = column.querySelector(".add-card input");
+        input.addEventListener("keydown", function (e) {
+          addCard(e, input);
+        });
+      });
+    }
+
+    // Delete list function
+    function deleteList(listId) {
+      if (!confirm("Are you sure you want to delete this list?")) return;
+
+      // Remove list from localStorage data then re-render
+      let data = loadBoardData();
+      data = data.filter((list) => list.id !== listId);
+
+      // Save new data and re-render
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      renderBoard();
+    }
+
+    // Drag and Drop handlers
+    function allowDrop(ev) {
+      ev.preventDefault();
+    }
+
+    function drag(ev) {
+      ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    function drop(ev) {
+      ev.preventDefault();
+      const data = ev.dataTransfer.getData("text");
+      const card = document.getElementById(data);
+
+      // Find the closest column from drop target
+      let column = ev.target.closest(".column");
+      if (!column) return; // Outside a column, ignore
+
+      const list = column.querySelector(".card-list");
+      if (list && card) {
+        list.appendChild(card);
+        saveBoardData(); // Save after drop
+      }
+    }
+
+    // Add card function (works for both initial and new lists)
+    function addCard(event, input) {
+      if (event.key === "Enter" && input.value.trim() !== "") {
+        const cardList = input.closest(".column").querySelector(".card-list");
+        const card = document.createElement("div");
+        card.className = "card";
+        card.draggable = true;
+        card.id = generateId("card");
+        card.textContent = input.value.trim();
+
+        card.addEventListener("dragstart", drag);
+
+        cardList.appendChild(card);
+        input.value = "";
+        saveBoardData(); // Save after adding card
+      }
+    }
+
+    // Show input to add a new list
+    function showListInput() {
+      document.getElementById("addListText").style.display = "none";
+      document.getElementById("listInputWrapper").style.display = "block";
+      document.getElementById("newListName").focus();
+    }
+
+    // Add a new list
+    function addList(event) {
+      if (event.key === "Enter") {
+        const name = event.target.value.trim();
+        if (name !== "") {
+          const board = document.getElementById("board");
+          const addListBtn = document.getElementById("addListBtn");
+
+          const newListId = generateId("list");
+
+          const column = document.createElement("div");
+          column.className = "column";
+          column.dataset.id = newListId;
+          column.setAttribute("ondrop", "drop(event)");
+          column.setAttribute("ondragover", "allowDrop(event)");
+
+          column.innerHTML = `
+            <h3>
+              <span class="list-title">${name}</span>
+              <button class="delete-list-btn" title="Delete list" onclick="deleteList('${newListId}')">&times;</button>
+            </h3>
+            <div class="card-list"></div>
+            <div class="add-card">
+              <input type="text" placeholder="+ Add a card" />
+            </div>
+          `;
+
+          // Insert before the add-list div
+          board.insertBefore(column, addListBtn);
+
+          // Add event listener for new card input
+          const input = column.querySelector(".add-card input");
+          input.addEventListener("keydown", function (e) {
+            addCard(e, input);
+          });
+
+          // Reset add-list UI
+          event.target.value = "";
+          document.getElementById("addListText").style.display = "block";
+          document.getElementById("listInputWrapper").style.display = "none";
+
+          saveBoardData(); // Save after adding list
+        }
+      }
+    }
+
+    // Initial render
+    renderBoard();
+  </script>
+</body>
+</html>
